@@ -108,6 +108,7 @@ precmd() {
 ### Aliases ###
 alias history='history -E'
 alias ll='ls -l'
+alias flywayall='sbt flywayMigrate && sbt -Dflyway.url=jdbc:mysql://127.0.0.1/sharaku_test flywayMigrate'
 
 # execute ls after cd
 function cd() {
@@ -118,3 +119,4 @@ function cd() {
 # AWS-CLI
 source /usr/local/share/zsh/site-functions/_aws
 
+source ~/.zshrc_secret
