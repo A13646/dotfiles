@@ -109,6 +109,9 @@ precmd() {
 alias history='history -E'
 alias ll='ls -l'
 alias flywayall='sbt flywayMigrate && sbt -Dflyway.url=jdbc:mysql://127.0.0.1/sharaku_test flywayMigrate'
+alias dockerc='docker-compose'
+alias dockerm='docker-machine'
+alias dockerrm='docker rm -f `docker ps -aq`'
 
 # execute ls after cd
 function cd() {
@@ -120,3 +123,23 @@ function cd() {
 source /usr/local/share/zsh/site-functions/_aws
 
 source ~/.zshrc_secret
+
+# docker-machine
+eval $(dockerm env)
+# docker compose for ganesha
+export DOCKER_HOST_ADDR=$(docker-machine ip)
+
+# For pet
+# https://github.com/knqyf263/pet
+function prev() {
+  PREV=$(fc -lrn | head -n 1)
+  sh -c "pet new `printf %q "$PREV"`"
+}
+
+function pet-select() {
+  BUFFER=$(pet search --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle redisplay
+}
+zle -N pet-select
+bindkey '^s' pet-select
